@@ -1,7 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://4cisopq45u0i"]
+[gd_scene load_steps=15 format=3 uid="uid://4cisopq45u0i"]
 
-[ext_resource type="Script" uid="uid://ga84dt44xxj3" path="res://godot-rpg-testing/scripts/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://ga84dt44xxj3" path="res://godot-rpg-testing/scripts/player/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://dk6smxytd65vo" path="res://godot-rpg-testing/art/characters/player.png" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://veosd0etne1o" path="res://godot-rpg-testing/scripts/player/player_state_machine.gd" id="3_ccpi5"]
+[ext_resource type="Script" uid="uid://cd5re5t1l7l1u" path="res://godot-rpg-testing/scripts/player/states/state_idle.gd" id="4_kpuyi"]
+[ext_resource type="Script" uid="uid://0rc8ucx5kgvh" path="res://godot-rpg-testing/scripts/player/states/state_walk.gd" id="5_llqyy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 
@@ -166,3 +169,12 @@ libraries = {
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_ccpi5")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_kpuyi")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_llqyy")
