@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5rdlcjesnqv2"]
+
+[ext_resource type="PackedScene" uid="uid://4cisopq45u0i" path="res://godot-rpg-testing/scenes/player.tscn" id="1_nnsk1"]
+
+[node name="world" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_nnsk1")]
+position = Vector2(-4, 2)
