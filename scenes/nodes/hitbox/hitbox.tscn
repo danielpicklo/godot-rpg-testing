@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba8dgjnxw718l"]
+
+[ext_resource type="Script" uid="uid://b1hmio5lmlrqi" path="res://godot-rpg-testing/scripts/collision/hitbox.gd" id="1_7habm"]
+
+[node name="Hitbox" type="Area2D"]
+collision_layer = 256
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_7habm")

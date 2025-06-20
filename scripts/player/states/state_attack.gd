@@ -9,6 +9,8 @@ var active_animation : bool = false
 @onready var animation_player: AnimationPlayer = $"../../AnimationPlayer"
 @onready var effect_player: AnimationPlayer = $"../../Sprite2D/AttackEffect/AnimationPlayer"
 @onready var audio: AudioStreamPlayer2D = $"../../Sounds/AudioStreamPlayer2D"
+@onready var hurtbox: Hurtbox = $"../../Interactions/Hurtbox"
+
 
 @onready var walk : State = $"../Walk"
 @onready var idle: State = $"../Idle"
@@ -24,12 +26,18 @@ func EnterState() -> void:
 	audio.play()
 	
 	active_animation = true
+	
+	# Enable attack hurtbox when attacking
+	await get_tree().create_timer(0.1).timeout
+	hurtbox.monitoring = true
 	pass
 
 ## When a player exits a state
 func ExitState() -> void:
 	animation_player.animation_finished.disconnect(EndAnimation)
 	active_animation = false;
+	
+	hurtbox.monitoring = false
 	pass
 
 ## Process input events in state

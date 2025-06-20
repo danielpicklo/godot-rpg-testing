@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dncfseobe37qj"]
+
+[ext_resource type="Script" uid="uid://c17a782lojo4g" path="res://godot-rpg-testing/scripts/props/plant.gd" id="1_qa610"]
+[ext_resource type="Texture2D" uid="uid://le2q7bwi1ynf" path="res://godot-rpg-testing/art/objects/Props.png" id="1_wplul"]
+[ext_resource type="PackedScene" uid="uid://ba8dgjnxw718l" path="res://godot-rpg-testing/scenes/nodes/hitbox/hitbox.tscn" id="2_qa610"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmf55"]
+size = Vector2(24, 16)
+
+[node name="Plant" type="Node2D"]
+position = Vector2(0, -16)
+script = ExtResource("1_qa610")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wplul")
+hframes = 16
+vframes = 3
+
+[node name="Hitbox" parent="." instance=ExtResource("2_qa610")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_kmf55")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_kmf55")
