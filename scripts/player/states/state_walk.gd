@@ -15,11 +15,11 @@ func ExitState() -> void:
 
 ## Process input events in state
 func ProcessState(_delta: float) -> State:
-	if player.direction == Vector2.ZERO:
+	if player.move_direction == Vector2.ZERO:
 		return idle
 	
 	if attack.active_animation == false:
-		player.velocity = player.direction * (player.base_speed * speed_multiplier)
+		player.velocity = player.move_direction * (player.base_speed * speed_multiplier)
 		
 		if player.SetDirection():
 			player.UpdateAnimation("walk")

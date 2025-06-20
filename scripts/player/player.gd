@@ -1,7 +1,10 @@
 class_name Player extends CharacterBody2D
 
 var cardinal_direction : Vector2 = Vector2.DOWN
-var direction : Vector2 = Vector2.ZERO
+var move_direction : Vector2 = Vector2.ZERO
+var look_direction : Vector2 = Vector2.ZERO
+const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
+
 @export var base_speed : float = 100.0
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -16,25 +19,33 @@ func _ready():
 
 func _process(delta: float):
 	
+	look_direction = GetLookDirection()
+	
 	## Handle player input for movement
-	direction = Vector2(
+	move_direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
 	).normalized()
 	pass
-	
+
 func _physics_process(delta: float):
 	move_and_slide()
-	
+
+func GetLookDirection() -> Vector2:
+	var mouse_pos = get_global_mouse_position()
+	var to_mouse = (mouse_pos - global_position).normalized()
+
+	if abs(to_mouse.x) > abs(to_mouse.y):
+		return Vector2.RIGHT if to_mouse.x > 0 else Vector2.LEFT
+	else:
+		return Vector2.DOWN if to_mouse.y > 0 else Vector2.UP
+
 func	 SetDirection() -> bool:
-	var new_direction : Vector2 = cardinal_direction
-	if direction == Vector2.ZERO:
+	if look_direction == Vector2.ZERO:
 		return false
 	
-	if direction.y == 0:
-		new_direction = Vector2.LEFT if direction.x < 0 else Vector2.RIGHT
-	elif direction.x == 0:
-		new_direction = Vector2.UP if direction.y < 0 else Vector2.DOWN
+	var direction_id : int = int(round( (look_direction).angle() / TAU * DIR_4.size() ))
+	var new_direction = DIR_4[direction_id]
 	
 	if new_direction == cardinal_direction:
 		return false

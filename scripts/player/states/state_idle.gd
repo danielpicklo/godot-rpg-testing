@@ -15,7 +15,7 @@ func ExitState() -> void:
 
 ## Process input events in state
 func ProcessState(_delta: float) -> State:
-	if player.direction != Vector2.ZERO:
+	if player.move_direction != Vector2.ZERO:
 		return walk
 	player.velocity = Vector2.ZERO
 	return null

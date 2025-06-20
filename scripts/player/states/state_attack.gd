@@ -42,17 +42,17 @@ func ExitState() -> void:
 
 ## Process input events in state
 func ProcessState(_delta: float) -> State:
-	if player.direction != Vector2.ZERO && !active_animation:
+	if player.move_direction != Vector2.ZERO && !active_animation:
 		return walk
 	
 	# Slow player down after attacking
 	player.velocity -= player.velocity * decelerate_speed * _delta
 	
 	# Allow player to continue moving while attacking, but slower
-	player.velocity = player.direction * (player.base_speed * speed_multiplier)
+	player.velocity = player.move_direction * (player.base_speed * speed_multiplier)
 	
 	if active_animation == false:
-		if player.direction == Vector2.ZERO:
+		if player.move_direction == Vector2.ZERO:
 			return idle
 		else:
 			return walk
