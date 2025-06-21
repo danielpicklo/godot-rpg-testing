@@ -1,8 +1,13 @@
-class_name State extends Node
+class_name EnemyState extends Node
 
-static var player : Player
+var enemy : Enemy
+var state_machine : EnemyStateMachine
 
 func _ready():
+	pass
+
+## When the state is initialized
+func Init():
 	pass
 
 ## When a player enters a state
@@ -14,13 +19,9 @@ func ExitState() -> void:
 	pass
 
 ## Process input events in state
-func ProcessState(_delta: float) -> State:
+func ProcessState(_delta: float) -> EnemyState:
 	return null
 
 ## Handle updates during _physics_process and apply to state
-func Physics(_delta: float) -> State:
-	return null
-
-## Handle input events during state
-func HandleInput(_event: InputEvent) -> State:
+func Physics(_delta: float) -> EnemyState:
 	return null

@@ -6,6 +6,8 @@ var look_direction : Vector2 = Vector2.ZERO
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 
 @export var base_speed : float = 100.0
+@export var health : int = 100
+@export var maddy_mode : bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
@@ -14,10 +16,11 @@ const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 signal DirectionChanged(new_direction: Vector2)
 
 func _ready():
+	PlayerManager.player = self
 	state_machine.Initialize(self)
 	pass
 
-func _process(delta: float):
+func _process(_delta: float):
 	
 	# Handle determination of player orientation by mouse position
 	look_direction = GetLookDirection()
@@ -29,7 +32,7 @@ func _process(delta: float):
 	).normalized()
 	pass
 
-func _physics_process(delta: float):
+func _physics_process(_delta: float):
 	move_and_slide()
 
 # Get the mouse position and return a Vector2
