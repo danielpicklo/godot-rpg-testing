@@ -19,9 +19,10 @@ func _ready():
 
 func _process(delta: float):
 	
+	# Handle determination of player orientation by mouse position
 	look_direction = GetLookDirection()
 	
-	## Handle player input for movement
+	# Handle player input for movement
 	move_direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
@@ -31,6 +32,7 @@ func _process(delta: float):
 func _physics_process(delta: float):
 	move_and_slide()
 
+# Get the mouse position and return a Vector2
 func GetLookDirection() -> Vector2:
 	var mouse_pos = get_global_mouse_position()
 	var to_mouse = (mouse_pos - global_position).normalized()
@@ -40,6 +42,7 @@ func GetLookDirection() -> Vector2:
 	else:
 		return Vector2.DOWN if to_mouse.y > 0 else Vector2.UP
 
+# Set the player orientation by the mouse position
 func	 SetDirection() -> bool:
 	if look_direction == Vector2.ZERO:
 		return false

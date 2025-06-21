@@ -3,6 +3,7 @@ class_name State_Idle extends State
 @export var speed_multiplier : float = 1.0
 @onready var walk : State = $"../Walk"
 @onready var attack: State = $"../Attack"
+@onready var parry: State_Parry = $"../Parry"
 
 ## When a player enters a state
 func EnterState() -> void:
@@ -28,4 +29,6 @@ func Physics(_delta: float) -> State:
 func HandleInput(_event: InputEvent) -> State:
 	if _event.is_action_pressed("attack"):
 		return attack
+	elif _event.is_action_pressed("parry"):
+		return parry
 	return null

@@ -1,8 +1,8 @@
-class_name State_Attack extends State
+class_name State_Parry extends State
 
 var active_animation : bool = false
 
-@export var speed_multiplier : float = 0.5
+@export var speed_multiplier : float = 0.25
 @export_range(1, 20, 0.5) var decelerate_speed : float = 5.0
 @export var attack_sound : AudioStream
 
@@ -16,27 +16,29 @@ var active_animation : bool = false
 
 ## When a player enters a state
 func EnterState() -> void:
-	player.UpdateAnimation("attack")
-	effect_player.play("attack_" + player.AnimationDirection())
+	
 	animation_player.animation_finished.connect(EndAnimation)
 	
+	# Handle delay before parry effect
+	await get_tree().create_timer(0.35).timeout
+	player.UpdateAnimation("attack")
+	effect_player.play("attack_" + player.AnimationDirection())
+	
+	
 	audio.stream = attack_sound
-	audio.pitch_scale = randf_range(0.25, 1.25)
+	audio.pitch_scale = randf_range(4.0, 6.25)
 	audio.play()
 	
 	active_animation = true
 	
-	# Enable attack hurtbox when attacking
-	await get_tree().create_timer(0.1).timeout
-	hurtbox.monitoring = true
+	print("Parry")
+	hurtbox.monitoring = false
 	pass
 
 ## When a player exits a state
 func ExitState() -> void:
 	animation_player.animation_finished.disconnect(EndAnimation)
 	active_animation = false
-	
-	hurtbox.monitoring = false
 	pass
 
 ## Process input events in state
