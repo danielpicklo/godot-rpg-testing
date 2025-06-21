@@ -7,6 +7,7 @@ const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 
 @export var base_speed : float = 100.0
 @export var health : int = 100
+@export var knockback : float = 100.0
 @export var maddy_mode : bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
