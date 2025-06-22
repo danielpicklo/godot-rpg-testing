@@ -4,5 +4,5 @@ func _ready():
 	$Hitbox.Damaged.connect(TakeDamage)
 	pass
 
-func TakeDamage(_damage: int) -> void:
+func TakeDamage(_hurtbox: Hurtbox) -> void:
 	queue_free()

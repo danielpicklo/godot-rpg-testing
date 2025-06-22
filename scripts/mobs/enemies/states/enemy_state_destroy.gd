@@ -5,6 +5,7 @@ class_name EnemyStateDestroy extends EnemyState
 
 @export_category("AI")
 
+var _damage_position : Vector2
 var _direction : Vector2
 
 func _ready():
@@ -15,13 +16,13 @@ func Init():
 	enemy.EnemyDestroyed.connect(_OnEnemyDestroyed)
 	pass
 
-## When a player enters a state
+## When an enemy enters a state
 func EnterState() -> void:
 	
 	enemy.invulnerable = true
-	var rand = randi_range(0, 3)
+	var _rand = randi_range(0, 3)
 	
-	_direction = enemy.global_position.direction_to(enemy.player.global_position)
+	_direction = enemy.global_position.direction_to(_damage_position)
 	enemy.SetDirection(Vector2.DOWN)
 	enemy.velocity = _direction * (-enemy.player.knockback / enemy.knockback_resistance)
 	
@@ -29,7 +30,7 @@ func EnterState() -> void:
 	enemy.animation_player.animation_finished	.connect(_OnAnimationFinished)
 	pass
 
-## When a player exits a state
+## When an enemy exits a state
 func ExitState() -> void:
 	pass
 
@@ -44,7 +45,8 @@ func Physics(_delta: float) -> EnemyState:
 	return null
 
 ## Handle when the enemy is damaged
-func _OnEnemyDestroyed() -> void:
+func _OnEnemyDestroyed(hurtbox: Hurtbox) -> void:
+	_damage_position = hurtbox.global_position
 	state_machine.ChangeState(self)
 
 func _OnAnimationFinished(_a : String) -> void:

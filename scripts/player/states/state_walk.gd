@@ -5,6 +5,10 @@ class_name State_Walk extends State
 @onready var attack: State = $"../Attack"
 @onready var parry: State = $"../Parry"
 
+## When the state is initialized
+func Init() -> void:
+	return
+
 ## When a player enters a state
 func EnterState() -> void:
 	player.UpdateAnimation("walk")

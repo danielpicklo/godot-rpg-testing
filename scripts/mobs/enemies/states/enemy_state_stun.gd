@@ -6,6 +6,7 @@ class_name EnemyStateStun extends EnemyState
 @export_category("AI")
 @export var next_state : EnemyState
 
+var _damage_position : Vector2
 var _direction : Vector2
 var _animation_finished : bool = false
 
@@ -20,13 +21,17 @@ func Init():
 ## When a player enters a state
 func EnterState() -> void:
 	
+	var knockback_bonus : float = 0.0
+	if enemy.player.parrying == true:
+		knockback_bonus = 50.0
+	
 	_animation_finished = false
 	enemy.invulnerable = true
-	var rand = randi_range(0, 3)
+	var _rand = randi_range(0, 3)
 	
-	_direction = enemy.global_position.direction_to(enemy.player.global_position)
+	_direction = enemy.global_position.direction_to(_damage_position)
 	enemy.SetDirection(_direction)
-	enemy.velocity = _direction * (-enemy.player.knockback / enemy.knockback_resistance)
+	enemy.velocity = _direction * ((-enemy.player.knockback + knockback_bonus) / enemy.knockback_resistance)
 	
 	enemy.UpdateAnimation(anim_name)
 	enemy.animation_player.animation_finished	.connect(_OnAnimationFinished)
@@ -51,7 +56,8 @@ func Physics(_delta: float) -> EnemyState:
 	return null
 
 ## Handle when the enemy is damaged
-func _OnEnemyDamaged() -> void:
+func _OnEnemyDamaged(hurtbox: Hurtbox) -> void:
+	_damage_position = hurtbox.global_position
 	state_machine.ChangeState(self)
 
 func _OnAnimationFinished(_a : String) -> void:

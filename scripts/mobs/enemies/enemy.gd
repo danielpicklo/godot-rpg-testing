@@ -1,17 +1,20 @@
 class_name Enemy extends CharacterBody2D
 
 signal DirectionChanged(new_direction: Vector2)
-signal EnemyDamaged()
-signal EnemyDestroyed()
+signal EnemyDamaged(hurtbox: Hurtbox)
+signal EnemyDestroyed(hurtbox: Hurtbox)
 
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
-
-@export var health : int = 5
-@export var invulnerable : bool = false
-@export var knockback_resistance : float = 0.5
 var cardinal_direction : Vector2 = Vector2.DOWN
 var move_direction : Vector2 = Vector2.ZERO
 var player : Player
+
+@export_category("Enemy Attributes")
+@export var health : int = 5
+@export var invulnerable : bool = false
+@export var parry_resistant : bool = false
+@export var knockback : float = 5.0
+@export var knockback_resistance : float = 0.5
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -59,12 +62,16 @@ func AnimationDirection() -> String:
 	else:
 		return "side"
 
-func _TakeDamage(damage: int) -> void:
+func _TakeDamage(hurtbox: Hurtbox) -> void:
 	if invulnerable == true:
 		return
 	
-	health -= damage
+	var bonus_damage : int = 0
+	if player.parrying == true:
+		bonus_damage = 5
+	
+	health -= (hurtbox.damage + bonus_damage)
 	if health > 0:
-		EnemyDamaged.emit()
+		EnemyDamaged.emit(hurtbox)
 	else:
-		EnemyDestroyed.emit()
+		EnemyDestroyed.emit(hurtbox)

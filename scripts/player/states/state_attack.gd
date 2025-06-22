@@ -14,6 +14,10 @@ var active_animation : bool = false
 @onready var walk : State = $"../Walk"
 @onready var idle: State = $"../Idle"
 
+## When the state is initialized
+func Init() -> void:
+	return
+
 ## When a player enters a state
 func EnterState() -> void:
 	player.UpdateAnimation("attack")

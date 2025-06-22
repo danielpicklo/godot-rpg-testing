@@ -23,4 +23,10 @@ position = Vector2(54, -64)
 position = Vector2(-88, -74)
 
 [node name="Slime" parent="." instance=ExtResource("4_encxr")]
-position = Vector2(-45, -104)
+position = Vector2(-73, -24)
+
+[node name="Slime2" parent="." instance=ExtResource("4_encxr")]
+position = Vector2(-13, -45)
+
+[node name="Slime3" parent="." instance=ExtResource("4_encxr")]
+position = Vector2(-108, 29)

@@ -10,35 +10,51 @@ var active_animation : bool = false
 @onready var effect_player: AnimationPlayer = $"../../Sprite2D/AttackEffect/AnimationPlayer"
 @onready var audio: AudioStreamPlayer2D = $"../../Sounds/AudioStreamPlayer2D"
 @onready var hurtbox: Hurtbox = $"../../Interactions/Hurtbox"
+@onready var hitbox: Hitbox = $"../../Interactions/Hitbox"
+
 
 @onready var walk : State = $"../Walk"
 @onready var idle: State = $"../Idle"
 
+## When the state is initialized
+func Init() -> void:
+	return
+
 ## When a player enters a state
 func EnterState() -> void:
+	
+	# Handle starting parry cycle; most vulnerable here
+	player.start_parry = true
+	active_animation = true
 	
 	animation_player.animation_finished.connect(EndAnimation)
 	
 	# Handle delay before parry effect
-	await get_tree().create_timer(0.35).timeout
-	player.UpdateAnimation("attack")
-	effect_player.play("attack_" + player.AnimationDirection())
-	
-	
+	await get_tree().create_timer(player.parry_start_delay).timeout
+	player.start_parry = false
 	audio.stream = attack_sound
 	audio.pitch_scale = randf_range(4.0, 6.25)
 	audio.play()
 	
-	active_animation = true
+	player.MakeInvulnerable(player.parry_window)
+	player.parrying = true
+	hitbox.monitoring = false
+	hurtbox.monitoring = true
 	
-	print("Parry")
-	hurtbox.monitoring = false
+	await get_tree().create_timer(player.parry_window).timeout
+	player.UpdateAnimation("attack")
+	effect_player.play("attack_" + player.AnimationDirection())
+	
 	pass
 
 ## When a player exits a state
 func ExitState() -> void:
+	await get_tree().create_timer((player.parry_window * 2) + player.parry_start_delay).timeout
 	animation_player.animation_finished.disconnect(EndAnimation)
 	active_animation = false
+	hurtbox.monitoring = false
+	hitbox.monitoring = true
+
 	pass
 
 ## Process input events in state
@@ -46,7 +62,7 @@ func ProcessState(_delta: float) -> State:
 	if player.move_direction != Vector2.ZERO && !active_animation:
 		return walk
 	
-	# Slow player down after attacking
+	# Slow player down after parrying
 	player.velocity -= player.velocity * decelerate_speed * _delta
 	
 	# Allow player to continue moving while attacking, but slower
