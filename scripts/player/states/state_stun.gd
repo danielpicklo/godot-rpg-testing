@@ -20,7 +20,7 @@ func EnterState() -> void:
 	var bonus_knockback : float = 0.0
 	if player.start_parry == true:
 		player.parrying = false
-		bonus_knockback = 100.0
+		bonus_knockback = 50.0
 	
 	player.enemy = hurtbox.get_parent()
 	player.UpdateAnimation("stun")

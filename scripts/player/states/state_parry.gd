@@ -38,8 +38,10 @@ func EnterState() -> void:
 	
 	player.MakeInvulnerable(player.parry_window)
 	player.parrying = true
-	hitbox.monitoring = false
-	hurtbox.monitoring = true
+	
+	if player.parrying == true:
+		hitbox.monitoring = false
+		hurtbox.monitoring = true
 	
 	await get_tree().create_timer(player.parry_window).timeout
 	player.UpdateAnimation("attack")

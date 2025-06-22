@@ -103,8 +103,8 @@ func _TakeDamage(hurtbox: Hurtbox) -> void:
 	if(parrying || start_parry):
 		print("PARRY FAILED")
 		UpdatePlayerHealth(-hurtbox.damage * 2)
-		parrying = false
 		UpdateAnimation("idle")
+		parrying = false
 	else:
 		UpdatePlayerHealth(-hurtbox.damage)
 		
