@@ -12,8 +12,6 @@ var player : Player
 
 # Targetting & Pathing System
 var is_targetting : bool = false
-@onready var targetting_timer: Timer = $Timers/TargettingTimer
-@onready var pathing_timer: Timer = $Timers/PathingTimer
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 
 @export_category("Enemy Attributes")
@@ -35,6 +33,10 @@ func _ready():
 	state_machine.Initialize(self)
 	player = PlayerManager.player
 	hitbox.Damaged.connect(_TakeDamage)
+	
+	# If the mob is not neutral by default, have it immediately start trying to target the player
+	if !neutral:
+		is_targetting = true
 	pass
 
 func _process(_delta):

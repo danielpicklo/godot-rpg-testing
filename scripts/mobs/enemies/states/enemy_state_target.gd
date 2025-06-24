@@ -25,8 +25,7 @@ func Init():
 ## When a player enters a state
 func EnterState() -> void:
 	if !enemy.neutral:
-		print("not neutral")
-		target_range == 1000.0
+		target_range = 1000.0
 	
 	await get_tree().create_timer(0.2).timeout
 	enemy.is_targetting = true
@@ -35,7 +34,6 @@ func EnterState() -> void:
 
 ## When a player exits a state
 func ExitState() -> void:
-	#enemy.animation_player.animation_finished.disconnect(_OnAnimationFinished)
 	pass
 
 ## Process input events in state
@@ -47,15 +45,17 @@ func ProcessState(_delta: float) -> EnemyState:
 
 ## Handle updates during _physics_process and apply to state
 func Physics(_delta: float) -> EnemyState:
+	
+	# Determine distance from target; if target is too far, change to next state
 	var target_location = enemy.player.global_position - enemy.global_position
 	if target_location.length() < target_range:
-		print("target_location", target_location.length())
 		enemy.is_targetting = true
 		enemy.SetDirection(_direction)
 		enemy.UpdateAnimation(anim_name)
 	else:
 		enemy.is_targetting = false
 		state_machine.ChangeState(next_state)
+		enemy.animation_player.animation_finished.disconnect(_OnAnimationFinished)
 	
 	return null
 

@@ -27,6 +27,7 @@ func EnterState() -> void:
 	
 	_animation_finished = false
 	enemy.invulnerable = true
+	enemy.is_targetting = false
 	var _rand = randi_range(0, 3)
 	
 	_direction = enemy.global_position.direction_to(_damage_position)
@@ -40,6 +41,7 @@ func EnterState() -> void:
 ## When a player exits a state
 func ExitState() -> void:
 	enemy.invulnerable = false
+	enemy.is_targetting = true
 	enemy.animation_player.animation_finished.disconnect(_OnAnimationFinished)
 	pass
 

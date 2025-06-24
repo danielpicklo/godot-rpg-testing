@@ -28,6 +28,7 @@ func EnterState() -> void:
 	hurtbox.monitoring = false
 	
 	enemy.invulnerable = true
+	enemy.is_targetting = false
 	var _rand = randi_range(0, 3)
 	
 	_direction = enemy.global_position.direction_to(_damage_position)
