@@ -32,11 +32,12 @@ func EnterState() -> void:
 
 ## When an enemy exits a state
 func ExitState() -> void:
+	if enemy.player.parrying == true:
+		print("death by parry")
 	pass
 
 ## Process input events in state
 func ProcessState(_delta: float) -> EnemyState:
-	
 	enemy.velocity -= enemy.velocity * decelerate_speed * _delta
 	return null
 

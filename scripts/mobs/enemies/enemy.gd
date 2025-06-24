@@ -7,12 +7,21 @@ signal EnemyDestroyed(hurtbox: Hurtbox)
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 var cardinal_direction : Vector2 = Vector2.DOWN
 var move_direction : Vector2 = Vector2.ZERO
+var look_direction : Vector2 = Vector2.ZERO
 var player : Player
+
+# Targetting & Pathing System
+var is_targetting : bool = false
+@onready var targetting_timer: Timer = $Timers/TargettingTimer
+@onready var pathing_timer: Timer = $Timers/PathingTimer
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 
 @export_category("Enemy Attributes")
 @export var health : int = 5
+@export var speed : float = 50.0
 @export var invulnerable : bool = false
 @export var parry_resistant : bool = false
+@export var neutral : bool = false
 @export var knockback : float = 5.0
 @export var knockback_resistance : float = 0.5
 
@@ -29,17 +38,43 @@ func _ready():
 	pass
 
 func _process(_delta):
+	if !is_targetting:
+		look_direction = move_direction
+	else:
+		look_direction = GetLookDirection()
 	pass
 
 func _physics_process(_delta: float) -> void:
+	if is_targetting == true:
+		nav_agent.target_position = player.global_position
+		var current_agent_position = global_position
+		var next_path_position = nav_agent.get_next_path_position()
+		velocity = current_agent_position.direction_to(next_path_position) * speed
 	move_and_slide()
 
+func _OnNavAgentVelocityComputed(safe_velocity: Vector2) -> void:
+	velocity = safe_velocity
+	pass
+
+# Get the player position and return a Vector2
+func GetLookDirection() -> Vector2:
+	var player_position = player.global_position
+	var to_player_position = (player_position - global_position).normalized()
+
+	if abs(to_player_position.x) > abs(to_player_position.y):
+		return Vector2.RIGHT if to_player_position.x > 0 else Vector2.LEFT
+	else:
+		return Vector2.DOWN if to_player_position.y > 0 else Vector2.UP
+
 func SetDirection(_new_direction: Vector2) -> bool:
-	move_direction = _new_direction
-	if move_direction == Vector2.ZERO:
+	
+	if !is_targetting:
+		look_direction = _new_direction
+		
+	if look_direction == Vector2.ZERO:
 		return false
 	
-	var direction_id : int = int(round( (move_direction).angle() / TAU * DIR_4.size() ))
+	var direction_id : int = int(round( (look_direction).angle() / TAU * DIR_4.size() ))
 	var new_direction = DIR_4[direction_id]
 	
 	if new_direction == cardinal_direction:
@@ -69,6 +104,8 @@ func _TakeDamage(hurtbox: Hurtbox) -> void:
 	var bonus_damage : int = 0
 	if player.parrying == true:
 		bonus_damage = 5
+	else:
+		bonus_damage = 0
 	
 	health -= (hurtbox.damage + bonus_damage)
 	if health > 0:

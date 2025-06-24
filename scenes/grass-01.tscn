@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://g0iidaxlmtgq"]
+[gd_scene load_steps=14 format=4 uid="uid://g0iidaxlmtgq"]
 
 [ext_resource type="Texture2D" uid="uid://8pqraswatihy" path="res://godot-rpg-testing/art/tilesets/decor_16x16.png" id="1_fr5ar"]
 [ext_resource type="Texture2D" uid="uid://s1173rvxgo06" path="res://godot-rpg-testing/art/tilesets/plains.png" id="1_kpavh"]
@@ -6,30 +6,58 @@
 [ext_resource type="Texture2D" uid="uid://dsnntps5nl268" path="res://godot-rpg-testing/art/tilesets/fences.png" id="4_4n0td"]
 [ext_resource type="Script" uid="uid://d01imrjj4bwhl" path="res://godot-rpg-testing/scripts/tilemaps/level_tilemap.gd" id="5_t73nj"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_t73nj"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t73nj"]
 texture = ExtResource("1_kpavh")
 0:0/0 = 0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 2:0/0 = 0
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 3:0/0 = 0
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 4:0/0 = 0
+4:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 5:0/0 = 0
+5:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 0:1/0 = 0
+0:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 1:1/0 = 0
+1:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 2:1/0 = 0
+2:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 3:1/0 = 0
+3:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 4:1/0 = 0
+4:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 5:1/0 = 0
+5:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 0:2/0 = 0
+0:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 1:2/0 = 0
+1:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 2:2/0 = 0
+2:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 3:2/0 = 0
+3:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 4:2/0 = 0
+4:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 5:2/0 = 0
+5:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 0:3/0 = 0
+0:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 1:3/0 = 0
+1:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 2:3/0 = 0
+2:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 3:3/0 = 0
+3:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_t73nj")
 0:4/0 = 0
 1:4/0 = 0
 2:4/0 = 0
@@ -77,16 +105,33 @@ texture = ExtResource("1_kpavh")
 4:11/0 = 0
 5:11/0 = 0
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_l5il8"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l5il8"]
 texture = ExtResource("2_4n0td")
 0:0/0 = 0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_l5il8")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nx5ik"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nx5ik"]
 texture = ExtResource("1_fr5ar")
 0:0/0 = 0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nx5ik")
 1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nx5ik")
 2:0/0 = 0
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nx5ik")
 3:0/0 = 0
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nx5ik")
 0:1/0 = 0
 1:1/0 = 0
 2:1/0 = 0
@@ -142,6 +187,7 @@ texture = ExtResource("4_4n0td")
 [sub_resource type="TileSet" id="TileSet_oaj2c"]
 physics_layer_0/collision_layer = 16
 physics_layer_0/collision_mask = 0
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_t73nj")
 sources/1 = SubResource("TileSetAtlasSource_l5il8")
 sources/2 = SubResource("TileSetAtlasSource_nx5ik")
