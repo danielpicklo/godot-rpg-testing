@@ -55,7 +55,7 @@ func Physics(_delta: float) -> EnemyState:
 	else:
 		enemy.is_targetting = false
 		state_machine.ChangeState(next_state)
-		enemy.animation_player.animation_finished.disconnect(_OnAnimationFinished)
+		#enemy.animation_player.animation_finished.disconnect(_OnAnimationFinished)
 	
 	return null
 

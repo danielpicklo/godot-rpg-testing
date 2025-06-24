@@ -99,18 +99,18 @@ func AnimationDirection() -> String:
 	else:
 		return "side"
 
-func _TakeDamage(hurtbox: Hurtbox) -> void:
+func _TakeDamage(_hurtbox: Hurtbox) -> void:
 	if invulnerable == true:
 		return
 	
 	var bonus_damage : int = 0
-	if player.parrying == true:
+	if player.parrying == true && !parry_resistant:
 		bonus_damage = 5
 	else:
 		bonus_damage = 0
 	
-	health -= (hurtbox.damage + bonus_damage)
+	health -= (_hurtbox.damage + bonus_damage)
 	if health > 0:
-		EnemyDamaged.emit(hurtbox)
+		EnemyDamaged.emit(_hurtbox)
 	else:
-		EnemyDestroyed.emit(hurtbox)
+		EnemyDestroyed.emit(_hurtbox)

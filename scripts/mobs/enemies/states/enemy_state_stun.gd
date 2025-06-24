@@ -22,7 +22,7 @@ func Init():
 func EnterState() -> void:
 	
 	var knockback_bonus : float = 0.0
-	if enemy.player.parrying == true:
+	if enemy.player.parrying == true && !enemy.parry_resistant:
 		knockback_bonus = 50.0
 	
 	_animation_finished = false

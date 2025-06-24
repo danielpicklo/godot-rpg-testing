@@ -55,8 +55,8 @@ func Physics(_delta: float) -> EnemyState:
 	return null
 
 ## Handle when the enemy is damaged
-func _OnEnemyDestroyed(hurtbox: Hurtbox) -> void:
-	_damage_position = hurtbox.global_position
+func _OnEnemyDestroyed(_hurtbox: Hurtbox) -> void:
+	_damage_position = _hurtbox.global_position
 	state_machine.ChangeState(self)
 
 func _OnAnimationFinished(_a : String) -> void:
