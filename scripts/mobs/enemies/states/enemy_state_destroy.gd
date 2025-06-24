@@ -8,6 +8,10 @@ class_name EnemyStateDestroy extends EnemyState
 var _damage_position : Vector2
 var _direction : Vector2
 
+@onready var hurtbox: Hurtbox = $"../../Hurtbox"
+@onready var hitbox: Hitbox = $"../../Hitbox"
+
+
 func _ready():
 	pass
 
@@ -18,6 +22,10 @@ func Init():
 
 ## When an enemy enters a state
 func EnterState() -> void:
+	
+	# Disable enemy ability to hurt while being destroyed
+	hitbox.monitoring = false
+	hurtbox.monitoring = false
 	
 	enemy.invulnerable = true
 	var _rand = randi_range(0, 3)
