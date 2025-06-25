@@ -43,6 +43,7 @@ func EnterState() -> void:
 func ExitState() -> void:
 	enemy.invulnerable = false
 	enemy.is_targetting = true
+	enemy.hurtbox.monitoring = true
 	enemy.animation_player.animation_finished.disconnect(_OnAnimationFinished)
 	pass
 

@@ -21,8 +21,6 @@ signal PlayerParry(hurtbox: Hurtbox)
 @export var max_health : int = 100
 @export var knockback : float = 100.0
 @export var knockback_resistance : float = 1.0
-#@export var parry_start_delay : float = 0.5
-#@export var parry_window : float = 0.15
 @export var invulnerability_window : float = 0.5
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -30,6 +28,7 @@ signal PlayerParry(hurtbox: Hurtbox)
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
 @onready var hitbox: Hitbox = $Interactions/Hitbox
+@onready var hurtbox: Hurtbox = $Interactions/Hurtbox
 @onready var parrybox: Parrybox = $Interactions/Parrybox
 
 func _ready():
@@ -72,6 +71,7 @@ func GetLookDirection() -> Vector2:
 
 # Set the player orientation by the mouse position
 func	 SetDirection() -> bool:
+	
 	if look_direction == Vector2.ZERO:
 		return false
 	
@@ -99,32 +99,33 @@ func AnimationDirection() -> String:
 		return "side"
 
 func _HandleParry(_hitbox: Hitbox) -> void:
-	print("handle parry")
 	is_parrying = true
 	return
 
-func _TakeDamage(hurtbox: Hurtbox) -> void:
+func _TakeDamage(_hurtbox: Hurtbox) -> void:
+	hurtbox.monitoring = false
 	if invulnerable == true:
 		return
-		
-	UpdatePlayerHealth(-hurtbox.damage)
+	
+	UpdatePlayerHealth(-_hurtbox.damage)
 		
 	if health > 0:
-		PlayerDamaged.emit(hurtbox)
+		PlayerDamaged.emit(_hurtbox)
 	else:
-		PlayerDamaged.emit(hurtbox)
+		PlayerDamaged.emit(_hurtbox)
 		UpdatePlayerHealth(99)
 	pass
 
 func UpdatePlayerHealth(delta: int) -> void:
-	#health += clampi(health + delta, 0, max_health)
-	health -= delta
+	health += clampi(health + delta, 0, max_health)
+	#health -= delta
 	print(health)
 	pass
 
 func MakeInvulnerable(_window: float = 1.0) -> void:
 	invulnerable = true
 	hitbox.monitoring = false
+	hurtbox.monitoring = false
 	
 	await get_tree().create_timer(_window).timeout
 	invulnerable = false

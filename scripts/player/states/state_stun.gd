@@ -17,13 +17,10 @@ func Init() -> void:
 ## When a player enters a state
 func EnterState() -> void:
 	
+	# Always disable the hurtbox/attack element when damaged
+	player.hurtbox.monitoring = false
+	
 	var bonus_knockback : float = 0.0
-	#if player.start_parry == true || player.parrying == true:
-		#bonus_knockback = 50.0
-		#print("this is supposed to fail")
-		#player.parrying = false
-		#player.start_parry = false
-		
 	
 	player.enemy = hurtbox.get_parent()
 	player.UpdateAnimation("stun")

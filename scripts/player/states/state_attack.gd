@@ -20,6 +20,8 @@ func Init() -> void:
 
 ## When a player enters a state
 func EnterState() -> void:
+	hurtbox.monitoring = false
+	
 	player.UpdateAnimation("attack")
 	effect_player.play("attack_" + player.AnimationDirection())
 	animation_player.animation_finished.connect(EndAnimation)
@@ -31,7 +33,6 @@ func EnterState() -> void:
 	active_animation = true
 	
 	# Enable attack hurtbox when attacking
-	await get_tree().create_timer(0.1).timeout
 	hurtbox.monitoring = true
 	pass
 
@@ -39,7 +40,6 @@ func EnterState() -> void:
 func ExitState() -> void:
 	animation_player.animation_finished.disconnect(EndAnimation)
 	active_animation = false
-	
 	hurtbox.monitoring = false
 	pass
 
