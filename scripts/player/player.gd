@@ -4,12 +4,13 @@ var cardinal_direction : Vector2 = Vector2.DOWN
 var move_direction : Vector2 = Vector2.ZERO
 var look_direction : Vector2 = Vector2.ZERO
 var enemy : Enemy
-var start_parry : bool = false
-var parrying : bool = false
+#var start_parry : bool = false
+var is_parrying : bool = false
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 
 signal DirectionChanged(new_direction: Vector2)
 signal PlayerDamaged(hurtbox: Hurtbox)
+signal PlayerParry(hurtbox: Hurtbox)
 
 @export var maddy_mode : bool = false
 @export var invulnerable : bool = false
@@ -20,8 +21,8 @@ signal PlayerDamaged(hurtbox: Hurtbox)
 @export var max_health : int = 100
 @export var knockback : float = 100.0
 @export var knockback_resistance : float = 1.0
-@export var parry_start_delay : float = 0.5
-@export var parry_window : float = 0.15
+#@export var parry_start_delay : float = 0.5
+#@export var parry_window : float = 0.15
 @export var invulnerability_window : float = 0.5
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -29,11 +30,13 @@ signal PlayerDamaged(hurtbox: Hurtbox)
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
 @onready var hitbox: Hitbox = $Interactions/Hitbox
+@onready var parrybox: Parrybox = $Interactions/Parrybox
 
 func _ready():
 	PlayerManager.player = self
 	state_machine.Initialize(self)
 	hitbox.Damaged.connect(_TakeDamage)
+	parrybox.Parry.connect(_HandleParry)
 	UpdatePlayerHealth(99)
 	pass
 
@@ -95,18 +98,16 @@ func AnimationDirection() -> String:
 	else:
 		return "side"
 
+func _HandleParry(_hitbox: Hitbox) -> void:
+	print("handle parry")
+	is_parrying = true
+	return
+
 func _TakeDamage(hurtbox: Hurtbox) -> void:
 	if invulnerable == true:
 		return
-	
-	# Increase the ammout of damage if we failed the parry
-	if(parrying || start_parry):
-		print("PARRY FAILED")
-		UpdatePlayerHealth(-hurtbox.damage * 2)
-		UpdateAnimation("idle")
-		parrying = false
-	else:
-		UpdatePlayerHealth(-hurtbox.damage)
+		
+	UpdatePlayerHealth(-hurtbox.damage)
 		
 	if health > 0:
 		PlayerDamaged.emit(hurtbox)

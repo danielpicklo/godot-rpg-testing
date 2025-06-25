@@ -9,4 +9,6 @@ func _ready():
 func AreaEntered(a: Area2D) -> void:
 	if a is Hitbox:
 		a.TakeDamage(self)
+	elif a is Parrybox:
+		a.HandleParry(self)
 	pass

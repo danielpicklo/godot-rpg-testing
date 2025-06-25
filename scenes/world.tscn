@@ -1,12 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5rdlcjesnqv2"]
+[gd_scene load_steps=7 format=3 uid="uid://c5rdlcjesnqv2"]
 
 [ext_resource type="PackedScene" uid="uid://4cisopq45u0i" path="res://godot-rpg-testing/scenes/player.tscn" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://pjys0uqkbyb6" path="res://godot-rpg-testing/scripts/_globals/world_generation.gd" id="1_oc50n"]
 [ext_resource type="PackedScene" uid="uid://g0iidaxlmtgq" path="res://godot-rpg-testing/scenes/grass-01.tscn" id="2_ykaj6"]
 [ext_resource type="PackedScene" uid="uid://dncfseobe37qj" path="res://godot-rpg-testing/scenes/props/plant.tscn" id="3_7nb1s"]
 [ext_resource type="PackedScene" uid="uid://bt8cir72qrk1j" path="res://godot-rpg-testing/scenes/mobs/enemies/slime.tscn" id="4_encxr"]
+[ext_resource type="Script" uid="uid://o3fu8gvrlwth" path="res://godot-rpg-testing/scripts/dungeons/generation/dungeon_generator.gd" id="6_edrxd"]
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_oc50n")
 
 [node name="player" parent="." instance=ExtResource("1_nnsk1")]
 position = Vector2(1, 0)
@@ -30,3 +33,6 @@ position = Vector2(-11, -79)
 
 [node name="Slime3" parent="." instance=ExtResource("4_encxr")]
 position = Vector2(-137, 46)
+
+[node name="DungeonGenerator" type="Node" parent="."]
+script = ExtResource("6_edrxd")

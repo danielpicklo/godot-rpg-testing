@@ -16,13 +16,14 @@ func _ready():
 ## When the state is initialized
 func Init():
 	enemy.EnemyDamaged.connect(_OnEnemyDamaged)
+	enemy.EnemyStaggered.connect(_OnEnemyStaggered)
 	pass
 
 ## When a player enters a state
 func EnterState() -> void:
 	
 	var knockback_bonus : float = 0.0
-	if enemy.player.parrying == true && !enemy.parry_resistant:
+	if enemy.player.is_parrying == true && !enemy.parry_resistant:
 		knockback_bonus = 50.0
 	
 	_animation_finished = false
@@ -60,6 +61,11 @@ func Physics(_delta: float) -> EnemyState:
 ## Handle when the enemy is damaged
 func _OnEnemyDamaged(hurtbox: Hurtbox) -> void:
 	_damage_position = hurtbox.global_position
+	state_machine.ChangeState(self)
+
+## Handle when the enemy is staggered
+func _OnEnemyStaggered(hitbox: Hitbox) -> void:
+	_damage_position = hitbox.global_position
 	state_machine.ChangeState(self)
 
 func _OnAnimationFinished(_a : String) -> void:

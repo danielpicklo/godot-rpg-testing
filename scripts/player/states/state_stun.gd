@@ -18,13 +18,15 @@ func Init() -> void:
 func EnterState() -> void:
 	
 	var bonus_knockback : float = 0.0
-	if player.start_parry == true:
-		player.parrying = false
-		bonus_knockback = 50.0
+	#if player.start_parry == true || player.parrying == true:
+		#bonus_knockback = 50.0
+		#print("this is supposed to fail")
+		#player.parrying = false
+		#player.start_parry = false
+		
 	
 	player.enemy = hurtbox.get_parent()
 	player.UpdateAnimation("stun")
-	player.animation_player.animation_finished.connect(_AnimationFinished)
 	
 	direction = player.global_position.direction_to(hurtbox.global_position)
 	player.velocity = direction * (-(player.enemy.knockback + bonus_knockback) / player.knockback_resistance)
@@ -32,6 +34,8 @@ func EnterState() -> void:
 	
 	player.MakeInvulnerable(player.invulnerability_window)
 	player.effect_player.play("damaged")
+
+	player.animation_player.animation_finished.connect(_AnimationFinished)
 	pass
 
 ## When a player exits a state

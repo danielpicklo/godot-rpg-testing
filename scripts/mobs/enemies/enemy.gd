@@ -3,6 +3,9 @@ class_name Enemy extends CharacterBody2D
 signal DirectionChanged(new_direction: Vector2)
 signal EnemyDamaged(hurtbox: Hurtbox)
 signal EnemyDestroyed(hurtbox: Hurtbox)
+signal EnemyStaggered(hitbox: Hitbox)
+signal EnemyStaggerDestroyed(hitbox: Hitbox)
+
 
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 var cardinal_direction : Vector2 = Vector2.DOWN
@@ -33,6 +36,7 @@ func _ready():
 	state_machine.Initialize(self)
 	player = PlayerManager.player
 	hitbox.Damaged.connect(_TakeDamage)
+	hitbox.Staggered.connect(_Stagger)
 	
 	# If the mob is not neutral by default, have it immediately start trying to target the player
 	if !neutral:
@@ -103,14 +107,18 @@ func _TakeDamage(_hurtbox: Hurtbox) -> void:
 	if invulnerable == true:
 		return
 	
-	var bonus_damage : int = 0
-	if player.parrying == true && !parry_resistant:
-		bonus_damage = 5
-	else:
-		bonus_damage = 0
-	
-	health -= (_hurtbox.damage + bonus_damage)
+	health -= (_hurtbox.damage)
 	if health > 0:
 		EnemyDamaged.emit(_hurtbox)
 	else:
 		EnemyDestroyed.emit(_hurtbox)
+
+func _Stagger(_hitbox: Hitbox) -> void:
+	
+	var bonus_damage : int = 1
+	if !parry_resistant:
+		health -= 5 * bonus_damage
+		if health > 0:
+			EnemyStaggered.emit(_hitbox)
+		else:
+			EnemyStaggerDestroyed.emit(_hitbox)

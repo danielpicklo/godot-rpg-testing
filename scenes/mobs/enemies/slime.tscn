@@ -647,6 +647,7 @@ shape = SubResource("CircleShape2D_58pwv")
 debug_color = Color(0.736501, 0.468975, 0.00257557, 0.42)
 
 [node name="Hitbox" parent="." instance=ExtResource("9_60s6k")]
+monitoring = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -4)

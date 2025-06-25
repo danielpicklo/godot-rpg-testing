@@ -6,6 +6,7 @@ class_name EnemyStateTarget extends EnemyState
 @export_category("AI")
 @export var target_range : float = 100.0
 @export var target_speed : float = 25.0
+@export var attack_range : float = 10.0
 
 @export var next_state : EnemyState
 @export var stun_state : EnemyState
@@ -52,6 +53,7 @@ func Physics(_delta: float) -> EnemyState:
 		enemy.is_targetting = true
 		enemy.SetDirection(_direction)
 		enemy.UpdateAnimation(anim_name)
+		
 	else:
 		enemy.is_targetting = false
 		state_machine.ChangeState(next_state)

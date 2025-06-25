@@ -18,6 +18,7 @@ func _ready():
 ## When the state is initialized
 func Init():
 	enemy.EnemyDestroyed.connect(_OnEnemyDestroyed)
+	enemy.EnemyStaggerDestroyed.connect(_OnEnemyDestroyed)
 	pass
 
 ## When an enemy enters a state
@@ -41,8 +42,6 @@ func EnterState() -> void:
 
 ## When an enemy exits a state
 func ExitState() -> void:
-	if enemy.player.parrying == true:
-		print("death by parry")
 	pass
 
 ## Process input events in state
@@ -55,7 +54,7 @@ func Physics(_delta: float) -> EnemyState:
 	return null
 
 ## Handle when the enemy is damaged
-func _OnEnemyDestroyed(_hurtbox: Hurtbox) -> void:
+func _OnEnemyDestroyed(_hurtbox) -> void:
 	_damage_position = _hurtbox.global_position
 	state_machine.ChangeState(self)
 

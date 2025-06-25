@@ -1,4 +1,4 @@
-class_name State_Parry extends State
+class_name State_ParryOLD extends State
 
 var active_animation : bool = false
 
@@ -11,7 +11,6 @@ var active_animation : bool = false
 @onready var audio: AudioStreamPlayer2D = $"../../Sounds/AudioStreamPlayer2D"
 @onready var hurtbox: Hurtbox = $"../../Interactions/Hurtbox"
 @onready var hitbox: Hitbox = $"../../Interactions/Hitbox"
-@onready var parrybox: Parrybox = $"../../Interactions/Parrybox"
 
 @onready var walk : State = $"../Walk"
 @onready var idle: State = $"../Idle"
@@ -24,27 +23,45 @@ func Init() -> void:
 func EnterState() -> void:
 	
 	# Handle starting parry cycle; most vulnerable here
+	player.start_parry = true
 	active_animation = true
+	
 	animation_player.animation_finished.connect(EndAnimation)
 	
-	await get_tree().create_timer(0.5).timeout
-	audio.stream = attack_sound
-	audio.pitch_scale = randf_range(4.0, 6.25)
-	audio.play()
+	# Handle delay before parry effect
+	await get_tree().create_timer(player.parry_start_delay).timeout
+	player.start_parry = false
+	
+	player.parrying = true
+	
+	if player.parrying == true:
+		hitbox.monitoring = false
+		hurtbox.monitoring = true
+	
+	await get_tree().create_timer(player.parry_window).timeout
+	if player.parrying == true:
+		audio.stream = attack_sound
+		audio.pitch_scale = randf_range(4.0, 6.25)
+		audio.play()
 		
-	player.MakeInvulnerable(0.5)
+		player.MakeInvulnerable(player.parry_window)
 		
-	player.UpdateAnimation("parry")
-	effect_player.play("attack_" + player.AnimationDirection())
-	await get_tree().create_timer(0.05).timeout
-	player.is_parrying = true
+		player.UpdateAnimation("attack")
+		effect_player.play("attack_" + player.AnimationDirection())
+	
 	pass
 
 ## When a player exits a state
 func ExitState() -> void:
+	
+	await get_tree().create_timer((player.parry_window * 2) + player.parry_start_delay).timeout
 	animation_player.animation_finished.disconnect(EndAnimation)
 	active_animation = false
-	player.is_parrying = false
+	hurtbox.monitoring = false
+	hitbox.monitoring = true
+	player.parrying = false
+	player.start_parry = false
+
 	pass
 
 ## Process input events in state
@@ -75,8 +92,3 @@ func HandleInput(_event: InputEvent) -> State:
 	
 func EndAnimation(_newAnimationName: String) -> void:
 	active_animation = false
-	
-func _PlayerParry(_parrybox: Parrybox) -> void:
-	parrybox = _parrybox
-	state_machine.ChangeState(self)
-	pass

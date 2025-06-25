@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://4cisopq45u0i"]
+[gd_scene load_steps=49 format=3 uid="uid://4cisopq45u0i"]
 
 [ext_resource type="Script" uid="uid://ga84dt44xxj3" path="res://godot-rpg-testing/scripts/player/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://bbowx0gdwxyya" path="res://godot-rpg-testing/scripts/player/player_camera.gd" id="2_3igcn"]
@@ -13,9 +13,10 @@
 [ext_resource type="AudioStream" uid="uid://di1f0afm1seq3" path="res://godot-rpg-testing/art/audio/sounds/SwordSwoosh.wav" id="9_lpdku"]
 [ext_resource type="PackedScene" uid="uid://bgrn821hoekyb" path="res://godot-rpg-testing/scenes/nodes/hurtbox/hurtbox.tscn" id="10_7htow"]
 [ext_resource type="Script" uid="uid://bhowip2vp7uwn" path="res://godot-rpg-testing/scripts/player/player_interactions.gd" id="10_gyvmm"]
-[ext_resource type="Script" uid="uid://cw7mk1tro51g0" path="res://godot-rpg-testing/scripts/player/states/state_parry.gd" id="11_vq12w"]
+[ext_resource type="Script" uid="uid://c5c5wc7vl0vnb" path="res://godot-rpg-testing/scripts/player/states/state_parry.gd" id="11_vq12w"]
 [ext_resource type="Script" uid="uid://b867kikh76wuv" path="res://godot-rpg-testing/scripts/player/states/state_stun.gd" id="13_oww1g"]
 [ext_resource type="PackedScene" uid="uid://ba8dgjnxw718l" path="res://godot-rpg-testing/scenes/nodes/hitbox/hitbox.tscn" id="14_jcaqt"]
+[ext_resource type="PackedScene" uid="uid://dyskumdrwcfc0" path="res://godot-rpg-testing/scenes/nodes/parrybox/parrybox.tscn" id="17_ab2aw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 7.0
@@ -268,6 +269,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Interactions/Parrybox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_naq1h"]
 resource_name = "attack_back"
@@ -501,6 +514,90 @@ tracks/0/keys = {
 "values": [Vector2i(0, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(3, 4), Vector2i(4, 4), Vector2i(5, 4)]
 }
 
+[sub_resource type="Animation" id="Animation_oor0n"]
+resource_name = "parry_back"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2i(0, 8), Vector2i(1, 8), Vector2i(2, 8), Vector2i(3, 8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Interactions/Parrybox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_fsk3a"]
+resource_name = "parry_front"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2i(0, 6), Vector2i(1, 6), Vector2i(2, 6), Vector2i(3, 6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Interactions/Parrybox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ekey7"]
+resource_name = "parry_side"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2i(0, 7), Vector2i(1, 7), Vector2i(2, 7), Vector2i(3, 7)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Interactions/Parrybox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ur7pv"]
 _data = {
 &"RESET": SubResource("Animation_qhqgy"),
@@ -510,6 +607,9 @@ _data = {
 &"idle_back": SubResource("Animation_qlg0r"),
 &"idle_front": SubResource("Animation_g2els"),
 &"idle_side": SubResource("Animation_dqkch"),
+&"parry_back": SubResource("Animation_oor0n"),
+&"parry_front": SubResource("Animation_fsk3a"),
+&"parry_side": SubResource("Animation_ekey7"),
 &"stun_back": SubResource("Animation_oww1g"),
 &"stun_front": SubResource("Animation_jcaqt"),
 &"stun_side": SubResource("Animation_nhx2u"),
@@ -591,6 +691,9 @@ radius = 15.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcaqt"]
 radius = 6.0
 height = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lq74r"]
+radius = 15.0333
 
 [node name="player" type="CharacterBody2D"]
 collision_mask = 17
@@ -691,7 +794,16 @@ debug_color = Color(0.979509, 0, 0.387452, 0.42)
 
 [node name="Hitbox" parent="Interactions" instance=ExtResource("14_jcaqt")]
 collision_layer = 2
+monitoring = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactions/Hitbox"]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_jcaqt")
+
+[node name="Parrybox" parent="Interactions" instance=ExtResource("17_ab2aw")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactions/Parrybox"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_lq74r")
+disabled = true
+debug_color = Color(0.832339, 0.00137596, 0.940194, 0.42)
