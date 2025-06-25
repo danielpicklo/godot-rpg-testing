@@ -114,7 +114,6 @@ func _TakeDamage(_hurtbox: Hurtbox) -> void:
 		EnemyDestroyed.emit(_hurtbox)
 
 func _Stagger(_hitbox: Hitbox) -> void:
-	
 	var bonus_damage : int = 1
 	if !parry_resistant:
 		health -= 5 * bonus_damage
