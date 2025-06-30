@@ -23,6 +23,8 @@ func Init() -> void:
 ## When a player enters a state
 func EnterState() -> void:
 	
+	player.is_sprinting = false
+	
 	# Handle starting parry cycle; most vulnerable here
 	active_animation = true
 	animation_player.animation_finished.connect(EndAnimation)

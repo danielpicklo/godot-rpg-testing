@@ -20,6 +20,8 @@ func Init() -> void:
 
 ## When a player enters a state
 func EnterState() -> void:
+	
+	player.is_sprinting = false
 	hurtbox.monitoring = false
 	
 	player.UpdateAnimation("attack")

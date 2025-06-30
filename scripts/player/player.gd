@@ -4,8 +4,9 @@ var cardinal_direction : Vector2 = Vector2.DOWN
 var move_direction : Vector2 = Vector2.ZERO
 var look_direction : Vector2 = Vector2.ZERO
 var enemy : Enemy
-#var start_parry : bool = false
 var is_parrying : bool = false
+var is_sprinting : bool = false
+var is_dashing : bool = false
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 
 signal DirectionChanged(new_direction: Vector2)

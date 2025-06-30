@@ -1,7 +1,9 @@
 class_name State_Idle extends State
 
 @export var speed_multiplier : float = 1.0
+
 @onready var walk : State = $"../Walk"
+@onready var sprint : State = $"../Sprint"
 @onready var attack: State = $"../Attack"
 @onready var parry: State_Parry = $"../Parry"
 
@@ -12,6 +14,7 @@ func Init() -> void:
 ## When a player enters a state
 func EnterState() -> void:
 	player.UpdateAnimation("idle")
+	player.is_sprinting = false
 	pass
 
 ## When a player exits a state
@@ -21,7 +24,10 @@ func ExitState() -> void:
 ## Process input events in state
 func ProcessState(_delta: float) -> State:
 	if player.move_direction != Vector2.ZERO:
-		return walk
+		if player.is_sprinting == false:
+			return walk
+		else:
+			return sprint
 	player.velocity = Vector2.ZERO
 	return null
 

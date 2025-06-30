@@ -17,6 +17,9 @@ func Init() -> void:
 ## When a player enters a state
 func EnterState() -> void:
 	
+	player.is_sprinting = false
+	player.is_parrying = false
+	
 	# Always disable the hurtbox/attack element when damaged
 	player.hurtbox.monitoring = false
 	

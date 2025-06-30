@@ -17,9 +17,9 @@ func _process(delta: float) -> void:
 ## Proess physics
 func _physics_process(delta: float) -> void:
 	ChangeState(curr_state.Physics(delta))
-	pass	
+	pass
 
-## Proess inputs
+## Process inputs
 func _unhandled_input(event: InputEvent) -> void:
 	ChangeState(curr_state.HandleInput(event))
 	pass
@@ -48,6 +48,7 @@ func ChangeState(new_state : State) -> void:
 		return
 	
 	if curr_state:
+		print(curr_state)
 		curr_state.ExitState()
 	
 	prev_state = curr_state

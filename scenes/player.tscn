@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://4cisopq45u0i"]
+[gd_scene load_steps=51 format=3 uid="uid://4cisopq45u0i"]
 
 [ext_resource type="Script" uid="uid://ga84dt44xxj3" path="res://godot-rpg-testing/scripts/player/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://bbowx0gdwxyya" path="res://godot-rpg-testing/scripts/player/player_camera.gd" id="2_3igcn"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://di1f0afm1seq3" path="res://godot-rpg-testing/art/audio/sounds/SwordSwoosh.wav" id="9_lpdku"]
 [ext_resource type="PackedScene" uid="uid://bgrn821hoekyb" path="res://godot-rpg-testing/scenes/nodes/hurtbox/hurtbox.tscn" id="10_7htow"]
 [ext_resource type="Script" uid="uid://bhowip2vp7uwn" path="res://godot-rpg-testing/scripts/player/player_interactions.gd" id="10_gyvmm"]
+[ext_resource type="Script" uid="uid://doc2nqdgc047i" path="res://godot-rpg-testing/scripts/player/states/state_sprint.gd" id="10_lq74r"]
+[ext_resource type="Script" uid="uid://cbdh5c0unddcb" path="res://godot-rpg-testing/scripts/player/states/state_dash.gd" id="11_q78qs"]
 [ext_resource type="Script" uid="uid://c5c5wc7vl0vnb" path="res://godot-rpg-testing/scripts/player/states/state_parry.gd" id="11_vq12w"]
 [ext_resource type="Script" uid="uid://b867kikh76wuv" path="res://godot-rpg-testing/scripts/player/states/state_stun.gd" id="13_oww1g"]
 [ext_resource type="PackedScene" uid="uid://ba8dgjnxw718l" path="res://godot-rpg-testing/scenes/nodes/hitbox/hitbox.tscn" id="14_jcaqt"]
@@ -799,6 +801,12 @@ script = ExtResource("4_kpuyi")
 
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("5_llqyy")
+
+[node name="Sprint" type="Node" parent="StateMachine"]
+script = ExtResource("10_lq74r")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("11_q78qs")
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("6_crnt1")
